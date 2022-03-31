@@ -1,0 +1,213 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/inputName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="256dp"
+        android:ems="10"
+        android:hint="Please enter name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="340dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="432dp"
+        android:layout_marginEnd="141dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+-----------------------------------------------------
+MainActivity.java
+
+package com.example.flindr;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.content.Intent;
+
+public class MainActivity extends AppCompatActivity {
+    private EditText inputUser;
+    private EditText inputPassword;
+    private Button button;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        inputUser = (EditText) findViewById(R.id.inputName);
+        inputPassword = (EditText) findViewById(R.id.inputPassword);
+        button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String Username = inputUser.getText().toString();
+                String Password = inputPassword.getText().toString();
+
+                if (Username.equals("admin") && Password.equals("admin")) {
+                    Toast.makeText(getApplicationContext(), "Login Successful...", Toast.LENGTH_SHORT).show();
+                    openActivity2();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Login unsuccessful!!!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+        public void openActivity2(){
+            Intent intent = new Intent(this, flinder2.class);
+            startActivity(intent);
+        }
+
+
+
+
+
+
+}
+
+
+------------------------------------------------
+activity_finder2.xml
+
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/darkmode"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8D63A6"
+    tools:context=".flinder2">
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="196dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="347dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="105dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="305dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <Switch
+        android:id="@+id/darkmodebutton"
+        android:layout_width="145dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Dark Mode "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="508dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+---------------------------------------------------------------------------
+flinder2.java
+
+package com.example.flindr;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
+
+public class flinder2 extends AppCompatActivity {
+
+    private Switch switch1;
+    private ConstraintLayout cl;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_flinder2);
+
+        cl = (ConstraintLayout) findViewById(R.id.darkmode);
+        switch1 = (Switch) findViewById(R.id.darkmodebutton);//#2C2033
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b)
+                {
+                    cl.setBackgroundColor(Color.parseColor("#2C2033"));
+                    Toast.makeText(getApplicationContext(),
+                            "Switch is on", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    // If the switch button is off
+                    cl.setBackgroundColor(Color.parseColor("#8D63A6"));
+
+                    // Show the switch button checked status as toast message
+                    Toast.makeText(getApplicationContext(),
+                            "Switch is off", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+}

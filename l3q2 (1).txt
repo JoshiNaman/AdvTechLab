@@ -1,0 +1,353 @@
+mainActivity.java
+package com.example.gautam.eval1;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.content.Intent;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.DatePicker;
+public class MainActivity extends AppCompatActivity {
+    String[] dept = { "cse", "it", "cce", "ece", "eee"};
+    String name,  gender, hobbies="", dob, department;
+    DatePicker picker;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Spinner spin = (Spinner) findViewById(R.id.spinner);
+        //spin.setOnItemSelectedListener(this);
+
+
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,dept);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spin.setAdapter(aa);
+        picker=(DatePicker)findViewById(R.id.datePicker);
+
+        findViewById(R.id.validate_button).setOnClickListener(v -> {
+            name = ((EditText)findViewById(R.id.name_edit)).getText().toString();
+
+            RadioGroup rg = (RadioGroup)findViewById(R.id.gender);
+            gender = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+            hobbies += ((CheckBox)findViewById(R.id.androidCheck)).isChecked() ? "Chess " : "";
+            hobbies += ((CheckBox)findViewById(R.id.iPhoneCheck)).isChecked() ? "Dancing " : "";
+            hobbies += ((CheckBox)findViewById(R.id.otherCheck)).isChecked() ? "Others" : "";
+            dob = getCurrentDate();
+            String textt = spin.getSelectedItem().toString();
+            department = textt;
+
+
+            Intent intent = new Intent(MainActivity.this , ConfirmActivity.class);
+            intent.putExtra("Name", name);
+            intent.putExtra("Gender", gender);
+            intent.putExtra("Hobbies", hobbies);
+            intent.putExtra("DOB", dob);
+            intent.putExtra("Department", department);
+
+            startActivity(intent);
+        });
+    }
+
+    /*@Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+        Toast.makeText(getApplicationContext(),dept[position] , Toast.LENGTH_LONG).show();
+
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+
+    }*/
+    public String getCurrentDate(){
+        StringBuilder builder=new StringBuilder();;
+        builder.append((picker.getMonth() + 1)+"/");//month is 0 based
+        builder.append(picker.getDayOfMonth()+"/");
+        builder.append(picker.getYear());
+        return builder.toString();
+    }
+}
+
+
+
+
+
+
+ConfirmActivity java 
+package com.example.gautam.eval1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class ConfirmActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.confirm_activity);
+        Intent intent = getIntent();
+        ((TextView) findViewById(R.id.name_view)).setText(intent.getStringExtra("Name"));
+        ((TextView) findViewById(R.id.gender_view)).setText(intent.getStringExtra("Gender"));
+        ((TextView) findViewById(R.id.hobbies_view)).setText(intent.getStringExtra("Hobbies"));
+        ((TextView) findViewById(R.id.dob)).setText(intent.getStringExtra("DOB"));
+        ((TextView) findViewById(R.id.dept_view)).setText(intent.getStringExtra("Department"));
+
+
+    }
+}
+
+
+main acitivuty xml
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="Enter your name"
+            android:inputType="text" />
+
+
+
+
+        <TextView
+            android:id="@+id/info_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/gender">
+            <RadioButton
+                android:id="@+id/rdm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"/>
+            <RadioButton
+                android:id="@+id/rdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/department_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hobbies" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+            <CheckBox
+                android:id="@+id/androidCheck"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chess"
+                android:checked="true"/>
+            <CheckBox
+                android:id="@+id/iPhoneCheck"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dancing"/>
+            <CheckBox
+                android:id="@+id/otherCheck"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Others"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/additional_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Picker" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="36dp" />
+
+        <TextView
+            android:id="@+id/rating_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Department" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+             />
+
+
+
+        <Button
+            android:id="@+id/validate_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+confrmm acitivuty xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android= "http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Personal Information of Employee!"
+        android:textAlignment="center"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_marginBottom="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name : "
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_view"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender : "
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gender_view"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hobbies : "
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hobbies_view"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOB"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dob"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Department : "
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dept_view"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
