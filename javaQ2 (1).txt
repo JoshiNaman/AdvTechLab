@@ -1,0 +1,69 @@
+package com.example.eval1;
+import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+    int i =0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        EditText etsem,etcode,etname,etcredit,etmarks,etgrade;
+        String[] sem= new String[5];
+        String[] code= new String[5];
+        String[] name= new String[5];
+        String[] credit= new String[5];
+        String[] marks= new String[5];
+        String[] grade= new String[5];
+        Button submit,hg,cgpa;
+        submit = findViewById(R.id.sub_btn);
+        etsem = findViewById(R.id.sem_et);
+        etcode = findViewById(R.id.code_et);
+        etname = findViewById(R.id.sub_et);
+        etcredit = findViewById(R.id.credit_et);
+        etmarks = findViewById(R.id.marks_et);
+        etgrade = findViewById(R.id.grade_et);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sem[i] = etsem.getText().toString();
+                code[i] = etcode.getText().toString();
+                name[i] = etname.getText().toString();
+                credit[i] = etcredit.getText().toString();
+                marks[i] = etmarks.getText().toString();
+                grade[i] = etgrade.getText().toString();
+                i = i+1;
+            }
+        });
+hg = findViewById(R.id.gpa);
+        hg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                char max = 'F';
+//                int k;
+//                for(int j=0;j<i;j++){
+//                    char test  = grade[j].charAt(0);
+//                    if(Character.valueoOf(max).compareTo(Character.valueOf(test))){
+//                        k = j;
+//                        max = test;
+//                    }
+//                }
+                Toast.makeText(getApplicationContext(),code[0],Toast.LENGTH_SHORT).show();
+            }
+        });
+        cgpa = findViewById(R.id.cgpa);
+        LinearLayout ll;
+        ll = findViewById(R.id.lin_layout);
+        cgpa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll.setBackgroundColor(Color.parseColor("#0000FF"));
+            }
+        });
+    }
+}

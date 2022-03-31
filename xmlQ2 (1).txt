@@ -1,0 +1,74 @@
+ Create an application that takes the input for Name, Address (toggle button), Gender (radio buttons for male and female), Age (numeric), Date of Birth (Date Picket). State (Spinner) and a Submit button. On clicking the submit button, print all the data on a new page with a heading "Personal Information of User" (use any layout).
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:scrollbars="vertical"
+android:id="@+id/lin_layout"
+tools:context=".MainActivity">
+<TextView
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:text="Student Details Form"
+android:gravity="center"
+android:textSize="20sp"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Enter Semester"
+android:id="@+id/sem_et"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Enter Subject Code"
+android:id="@+id/code_et"
+/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Enter Subject Name"
+android:id="@+id/sub_et"
+/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Enter Subject Credit"
+android:id="@+id/credit_et"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Marks out of 100"
+android:id="@+id/marks_et"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:hint="Grade"
+android:id="@+id/grade_et"/>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="70dp"
+android:orientation="horizontal">
+<Button
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/sub_btn"
+android:text="Submit"/>
+<Button
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/gpa"
+android:text="Gpa"/>
+<Button
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/cgpa"
+android:text="Cgpa"/>
+</LinearLayout>
+</LinearLayout>
